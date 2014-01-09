@@ -8,7 +8,7 @@
 #define AVERAGEHI(AB) ((((AB) & 0xF7DE0000) >> 1) + (((AB) & 0xF7DE) << 15))
 #define AVERAGELO(CD) ((((CD) & 0xF7DE) >> 1) + (((CD) & 0xF7DE0000) >> 17))
 
-void (*upscale_p)(uint32_t *dst, uint32_t *src, int width) = upscale_256x224_to_320x240_bilinearish;
+void (*upscale_p)(uint32_t *dst, uint32_t *src, int width) = upscale_256x224_to_320x240;
 
 /*
  * Approximately bilinear scaler, 256x224 to 320x240
@@ -92,9 +92,9 @@ void upscale_256x224_to_320x240_bilinearish(uint32_t* dst, uint32_t* src, int wi
 			 * (e)       (deee)
 			 * (f)       (efff)
 			 * (g)       (fggg)
-			 * (h)       (gh)
+			 * (h)       (ghhh)
 			 * (i)       (hi)
-			 * (j)       (ij)
+			 * (j)       (iiij)
 			 * (k)       (jjjk)
 			 * (l)       (kkkl)
 			 * (m)       (lllm)
@@ -183,14 +183,14 @@ void upscale_256x224_to_320x240_bilinearish(uint32_t* dst, uint32_t* src, int wi
 
 			// -- Row 8 --
 			uint16_t _29 = *(BlockSrc + 256 *  7    );
-			*(BlockDst + 320 *  7    ) = Weight1_1(_25, _29);
+			*(BlockDst + 320 *  7    ) = Weight1_3(_25, _29);
 			uint16_t _30 = *(BlockSrc + 256 *  7 + 1);
-			*(BlockDst + 320 *  7 + 1) = Weight1_1(Weight1_3(_25, _26), Weight1_3(_29, _30));
+			*(BlockDst + 320 *  7 + 1) = Weight1_3(Weight1_3(_25, _26), Weight1_3(_29, _30));
 			uint16_t _31 = *(BlockSrc + 256 *  7 + 2);
-			*(BlockDst + 320 *  7 + 2) = Weight1_1(Weight1_1(_26, _27), Weight1_1(_30, _31));
+			*(BlockDst + 320 *  7 + 2) = Weight1_3(Weight1_1(_26, _27), Weight1_1(_30, _31));
 			uint16_t _32 = *(BlockSrc + 256 *  7 + 3);
-			*(BlockDst + 320 *  7 + 3) = Weight1_1(Weight3_1(_27, _28), Weight3_1(_31, _32));
-			*(BlockDst + 320 *  7 + 4) = Weight1_1(_28, _32);
+			*(BlockDst + 320 *  7 + 3) = Weight1_3(Weight3_1(_27, _28), Weight3_1(_31, _32));
+			*(BlockDst + 320 *  7 + 4) = Weight1_3(_28, _32);
 
 			// -- Row 9 --
 			uint16_t _33 = *(BlockSrc + 256 *  8    );
@@ -205,14 +205,14 @@ void upscale_256x224_to_320x240_bilinearish(uint32_t* dst, uint32_t* src, int wi
 
 			// -- Row 10 --
 			uint16_t _37 = *(BlockSrc + 256 *  9    );
-			*(BlockDst + 320 *  9    ) = Weight1_1(_33, _37);
+			*(BlockDst + 320 *  9    ) = Weight3_1(_33, _37);
 			uint16_t _38 = *(BlockSrc + 256 *  9 + 1);
-			*(BlockDst + 320 *  9 + 1) = Weight1_1(Weight1_3(_33, _34), Weight1_3(_37, _38));
+			*(BlockDst + 320 *  9 + 1) = Weight3_1(Weight1_3(_33, _34), Weight1_3(_37, _38));
 			uint16_t _39 = *(BlockSrc + 256 *  9 + 2);
-			*(BlockDst + 320 *  9 + 2) = Weight1_1(Weight1_1(_34, _35), Weight1_1(_38, _39));
+			*(BlockDst + 320 *  9 + 2) = Weight3_1(Weight1_1(_34, _35), Weight1_1(_38, _39));
 			uint16_t _40 = *(BlockSrc + 256 *  9 + 3);
-			*(BlockDst + 320 *  9 + 3) = Weight1_1(Weight3_1(_35, _36), Weight3_1(_39, _40));
-			*(BlockDst + 320 *  9 + 4) = Weight1_1(_36, _40);
+			*(BlockDst + 320 *  9 + 3) = Weight3_1(Weight3_1(_35, _36), Weight3_1(_39, _40));
+			*(BlockDst + 320 *  9 + 4) = Weight3_1(_36, _40);
 
 			// -- Row 11 --
 			uint16_t _41 = *(BlockSrc + 256 * 10    );
