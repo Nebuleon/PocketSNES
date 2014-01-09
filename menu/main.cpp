@@ -169,7 +169,7 @@ bool8_32 S9xDeinitUpdate (int Width, int Height, bool8_32)
 	}
 	if (mMenuOptions.fullScreen == 2)
 	{
-		upscale_256x224_to_320x240_bilinearish((uint32_t*) sal_VideoGetBuffer(), (uint32_t*) IntermediateScreen, SNES_WIDTH);
+		upscale_256x224_to_320x240_bilinearish((uint32_t*) sal_VideoGetBuffer() + 160, (uint32_t*) IntermediateScreen, SNES_WIDTH);
 	}
 	if (mMenuOptions.fullScreen == 0)
 	{
