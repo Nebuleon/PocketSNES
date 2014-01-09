@@ -1114,7 +1114,10 @@ void MainMenuUpdateText(s32 menu_index)
 					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:               OFF");
 					break;
 				case 1:
-					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:                ON");
+					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:              FAST");
+					break;  
+				case 2:
+					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:            SMOOTH");
 					break;  
 			}
 			break;
@@ -1404,7 +1407,17 @@ s32 MenuRun(s8 *romName)
 					break;
 
 				case MENU_FULLSCREEN:
-					mMenuOptions->fullScreen^=1;
+					if (keys & SAL_INPUT_RIGHT)
+					{
+						mMenuOptions->fullScreen = (mMenuOptions->fullScreen + 1) % 3;
+					}
+					else
+					{
+						if (mMenuOptions->fullScreen == 0)
+							mMenuOptions->fullScreen = 2;
+						else
+							mMenuOptions->fullScreen--;
+					}
 					MainMenuUpdateText(MENU_FULLSCREEN);
 					break;
 			}

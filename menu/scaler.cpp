@@ -8,7 +8,7 @@
 #define AVERAGEHI(AB) ((((AB) & 0xF7DE0000) >> 1) + (((AB) & 0xF7DE) << 15))
 #define AVERAGELO(CD) ((((CD) & 0xF7DE) >> 1) + (((CD) & 0xF7DE0000) >> 17))
 
-void (*upscale_p)(uint32_t *dst, uint32_t *src, int width) = upscale_256x224_to_320x240_bilinearish;
+void (*upscale_p)(uint32_t *dst, uint32_t *src, int width) = upscale_256x224_to_320x240;
 
 /*
  * Approximately bilinear scaler, 256x224 to 320x240
