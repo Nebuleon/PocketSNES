@@ -265,7 +265,7 @@ void sal_VideoEnterGame(u32 fullscreenOption, u32 pal, u32 refreshRate)
 	/* Copied from C++ headers which we can't include in C */
 	unsigned int Width = 256 /* SNES_WIDTH */,
 	             Height = pal ? 239 /* SNES_HEIGHT_EXTENDED */ : 224 /* SNES_HEIGHT */;
-	if (fullscreenOption != 3)
+	if (fullscreenOption < 3)
 	{
 		Width = SAL_SCREEN_WIDTH;
 		Height = SAL_SCREEN_HEIGHT;
@@ -282,12 +282,27 @@ void sal_VideoEnterGame(u32 fullscreenOption, u32 pal, u32 refreshRate)
 	mRefreshRate = refreshRate;
 	if (SDL_MUSTLOCK(mScreen))
 		SDL_LockSurface(mScreen);
+		
+	if (fullscreenOption == 3 || fullscreenOption == 4)
+	{
+		FILE* aspect_ratio_file = fopen("/sys/devices/platform/jz-lcd.0/keep_aspect_ratio", "w");
+		if (aspect_ratio_file)
+		{ 
+			if (fullscreenOption == 3)
+				fwrite("1", 1, 1, aspect_ratio_file);
+			
+			if (fullscreenOption == 4)
+				fwrite("0", 1, 1, aspect_ratio_file);
+			
+			fclose(aspect_ratio_file);
+		}
+	}
 #endif
 }
 
 void sal_VideoSetPAL(u32 fullscreenOption, u32 pal)
 {
-	if (fullscreenOption == 3) /* hardware scaling */
+	if (fullscreenOption == 3 || fullscreenOption == 4) /* hardware scaling */
 	{
 		sal_VideoEnterGame(fullscreenOption, pal, mRefreshRate);
 	}

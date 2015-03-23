@@ -1194,7 +1194,10 @@ void MainMenuUpdateText(s32 menu_index)
 					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:            SMOOTH");
 					break;  
 				case 3:
-					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:          HARDWARE");
+					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:   HARDWARE-ASPECT");
+					break;
+				case 4:
+					strcpy(mMenuText[MENU_FULLSCREEN],"Full screen:  HARDWARE-STRETCH");
 					break;
 			}
 			break;
@@ -1590,12 +1593,12 @@ s32 MenuRun(s8 *romName)
 				case MENU_FULLSCREEN:
 					if (keys & SAL_INPUT_RIGHT)
 					{
-						mMenuOptions->fullScreen = (mMenuOptions->fullScreen + 1) % 4;
+						mMenuOptions->fullScreen = (mMenuOptions->fullScreen + 1) % 5;
 					}
 					else
 					{
 						if (mMenuOptions->fullScreen == 0)
-							mMenuOptions->fullScreen = 3;
+							mMenuOptions->fullScreen = 4;
 						else
 							mMenuOptions->fullScreen--;
 					}

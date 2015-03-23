@@ -176,7 +176,8 @@ bool8_32 S9xDeinitUpdate (int Width, int Height, bool8_32)
 	switch (mMenuOptions.fullScreen)
 	{
 		case 0: /* No scaling */
-		case 3: /* Hardware scaling */
+		case 3: /* Hardware scaling - Aspect */
+		case 4: /* Hardware scaling - Stretch */
 		{
 			u32 h = PAL ? SNES_HEIGHT_EXTENDED : SNES_HEIGHT;
 			u32 y, pitch = sal_VideoGetPitch();
